@@ -1,6 +1,5 @@
-name:  sample_pubspec
-description:  A sample application
-
-#dependencies:
-#  js: any
-#  unittest: any
+name: render_stats
+description: Port of stats.js to Dart.
+version: 1.0.0
+author: Brandon Jones <tojiro@gmail.com>
+homepage: https://github.com/toji/dart-render-stats
