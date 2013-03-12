@@ -28,17 +28,16 @@
 
 library render_stats;
 
-import "dart:core";
 import "dart:html";
 import "dart:math" as Math;
 
+static const int REVISION = 2;
+  
+static const int FPS_MODE = 0;
+static const int MS_MODE = 1;
+
 class RenderStats {
 // Public:
-  static const int REVISION = 1;
-  
-  static const int FPS_MODE = 0;
-  static const int MS_MODE = 1;
-  
   RenderStats() {
     _createElements();
     
@@ -87,60 +86,60 @@ class RenderStats {
   Element _msDiv, _msText, _msGraph;
   
   void _createElements() {
-    _container = new Element.tag("div");
-    _container.id = "stats";
-    _container.onMouseDown.listen((event) => mode = ++_mode % 2);
-    _container.style.cssText = "width:80px;opacity:0.9;cursor:pointer";
+    _container = new DivElement()
+      ..id = "stats"
+      ..onMouseDown.listen((event) => mode = ++_mode % 2)
+      ..style.cssText = "width:80px;opacity:0.9;cursor:pointer";
     
-    _fpsDiv = new Element.tag("div");
-    _fpsDiv.id = "fps";
-    _fpsDiv.style.cssText = "padding:0 0 3px 3px;text-align:left;background-color:#002";
+    _fpsDiv = new DivElement()
+      ..id = "fps"
+      ..style.cssText = "padding:0 0 3px 3px;text-align:left;background-color:#002";
     _container.append( _fpsDiv );
     
-    _fpsText = new Element.tag("div");
-    _fpsText.id = "fpsText";
-    _fpsText.style.cssText = "color:#0ff;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px";
-    _fpsText.text = 'FPS';
+    _fpsText = new DivElement()
+      ..id = "fpsText"
+      ..style.cssText = "color:#0ff;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px"
+      ..text = 'FPS';
     _fpsDiv.append( _fpsText );
     
-    _fpsGraph = new Element.tag("div");
-    _fpsGraph.id = "fpsGraph";
-    _fpsGraph.style.cssText = "position:relative;width:74px;height:30px;background-color:#0ff";
+    _fpsGraph = new DivElement()
+      ..id = "fpsGraph"
+      ..style.cssText = "position:relative;width:74px;height:30px;background-color:#0ff";
     _fpsDiv.append( _fpsGraph );
     
     while(_fpsGraph.children.length < _graphSegments) {
-      Element bar = new Element.tag("div");
-      bar.style.cssText = "width:1px;height:30px;float:left;background-color:#113";
+      Element bar = new DivElement()
+        ..style.cssText = "width:1px;height:30px;float:left;background-color:#113";
       _fpsGraph.append(bar);
     }
     
-    _msDiv = new Element.tag("div");
-    _msDiv.id = "ms";
-    _msDiv.style.cssText = "padding:0 0 3px 3px;text-align:left;background-color:#020;display:none";
+    _msDiv = new DivElement()
+      ..id = "ms"
+      ..style.cssText = "padding:0 0 3px 3px;text-align:left;background-color:#020;display:none";
     _container.append( _msDiv );
     
-    _msText = new Element.tag("div");
-    _msText.id = "msText";
-    _msText.style.cssText = "color:#0f0;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px";
-    _msText.text = "MS";
+    _msText = new DivElement()
+      ..id = "msText"
+      ..style.cssText = "color:#0f0;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px"
+      ..text = "MS";
     _msDiv.append( _msText );
     
-    _msGraph = new Element.tag("div");
-    _msGraph.id = "msGraph";
-    _msGraph.style.cssText = "position:relative;width:74px;height:30px;background-color:#0f0";
+    _msGraph = new DivElement()
+      ..id = "msGraph"
+      ..style.cssText = "position:relative;width:74px;height:30px;background-color:#0f0";
     _msDiv.append( _msGraph );
     
     while(_msGraph.children.length < _graphSegments) {
-      Element bar = new Element.tag("div");
-      bar.style.cssText = "width:1px;height:30px;float:left;background-color:#131";
+      Element bar = new DivElement()
+        ..style.cssText = "width:1px;height:30px;float:left;background-color:#131";
       _msGraph.append(bar);
     }
   }
   
   void _updateGraph(Element graph, num value) {
-    Element bar = graph.children[0];
+    Element bar = graph.children[0]
+      ..style.height = "${value}px";
     graph.append(bar);
-    bar.style.height = "${value}px";
   }
   
   void begin() {
